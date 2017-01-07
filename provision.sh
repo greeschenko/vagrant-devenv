@@ -45,6 +45,8 @@ echo "  CustomLog ${APACHE_LOG_DIR}/${NAME}_access.log combined" >> /etc/apache2
 echo "  Include conf-available/serve-cgi-bin.conf" >> /etc/apache2/sites-available/000-default.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 
+mysqladmin -uroot -p${PASSWORD} create ${NAME}
+
 # enable mod_rewrite
 sudo a2enmod rewrite
 
