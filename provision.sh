@@ -4,22 +4,20 @@
 NAME='myproject'
 PASSWORD='rootpass'
 
-# create project folder
-sudo mkdir "/var/www/myproject"
-
 # update / upgrade
-sudo apt-get update
+sudo add-apt-repository -y ppa:ondrej/php
+sudo apt-get -y update
 sudo apt-get -y upgrade
 
 # install apache 2.5 and php 5.5
-sudo apt-get install -y apache2-mpm-prefork
-sudo apt-get install -y php5 php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl
+sudo apt-get install -y libapache2-mod-php5.6
+sudo apt-get install -y php5.6-mbsting php5.6-zip php5.6-curl php5.6-gd php5.6-intl php-pear php5.6-imagick php5.6-imap php5.6-mcrypt php5.6-pspell php5.6-recode php5.6-sqlite php5.6-tidy php5.6-xmlrpc php5.6-xsl
 
 # install mysql and give password to installer
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PASSWORD"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PASSWORD"
 sudo apt-get -y install mysql-server
-sudo apt-get install php5-mysql
+sudo apt-get -y install php5.6-mysql
 
 # install phpmyadmin and give password(s) to installer
 #for simplicity I'm using the same password for mysql and phpmyadmin
@@ -60,3 +58,33 @@ sudo apt-get -y install curl
 # install Composer
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
+
+composer global require "fxp/composer-asset-plugin:^1.3.1"
+composer global require "codeception/codeception=*"
+composer global require "codeception/specify=*"
+composer global require "codeception/verify=*"
+sudo ln -s /home/vagrant/.config/composer/vendor/bin/codecept /usr/local/bin/codecept
+
+
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y xvfb
+sudo apt-get install -y htop
+sudo apt-get install -y redis-server
+sudo apt-get install -y unzip
+sudo apt-get install -y vim
+sudo apt-get install -y mc
+sudo apt-get install -y chromium-browser
+
+sudo add-apt-repository ppa:webupd8team/java -y
+sudo apt-get update -y
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get install oracle-java8-installer -y
+
+sudo npm install -g codeceptjs
+sudo npm install -g selenium-standalone@latest
+sudo selenium-standalone install
+sudo npm install -g webdriverio
+sudo npm install -g gulp
+
+echo "127.0.0.1    ${NAME}.ga" >> /etc/hosts
