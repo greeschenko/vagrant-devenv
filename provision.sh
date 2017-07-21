@@ -75,6 +75,7 @@ sudo apt-get install -y unzip
 sudo apt-get install -y vim
 sudo apt-get install -y mc
 sudo apt-get install -y chromium-browser
+sudo apt-get install -y gconf2
 
 sudo add-apt-repository ppa:webupd8team/java -y
 sudo apt-get update -y
